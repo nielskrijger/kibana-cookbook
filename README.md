@@ -1,7 +1,9 @@
 kibana cookbook
 ===============
 
-This Chef cookbook installs kibana on an nginx server on CentOS 6.5
+This Chef cookbook installs kibana on an nginx server on CentOS 6.5.
+
+This cookbook expects nginx already to be installed on the target server.
 
 This kibana cookbook has very limited configurability and likely you'll want to use
 a community kibana cookbook for your deployments instead.

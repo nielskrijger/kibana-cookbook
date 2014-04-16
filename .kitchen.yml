@@ -7,9 +7,15 @@ provisioner:
 
 platforms:
   - name: centos-6.5
+    driver:
+      network:
+      - ["forwarded_port", { guest: 80, host: 8080 }]
+      - ["forwarded_port", { guest: 9200, host: 9200 }]
 
 suites:
   - name: default
     run_list:
+      - recipe[nginx::default]
+      - recipe[elasticsearch::default]
       - recipe[kibana::default]
     attributes:

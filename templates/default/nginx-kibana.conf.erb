@@ -1,0 +1,48 @@
+#
+# GENERATED USING CHEF, DO NOT EDIT MANUALLY
+#
+# Nginx proxy for Elasticsearch + Kibana
+#
+server {
+
+  listen <%= node['kibana']['nginx']['http_port'] %>;
+
+  server_name <%= node['kibana']['nginx']['server_name'] %>;
+
+  access_log <%= node['kibana']['nginx']['access_log'] %>;
+  error_log <%= node['kibana']['nginx']['error_log'] %> warn;
+
+  location / {
+    root  <%= node['kibana']['dir'] %>;
+    index  index.html  index.htm;
+  }
+
+  location ~ ^/_aliases$ {
+    proxy_pass <%= node['kibana']['nginx']['elasticsearch_path'] %>;
+    proxy_read_timeout 90;
+  }
+  location ~ ^/.*/_aliases$ {
+    proxy_pass <%= node['kibana']['nginx']['elasticsearch_path'] %>;
+    proxy_read_timeout 90;
+  }
+  location ~ ^/_nodes$ {
+    proxy_pass <%= node['kibana']['nginx']['elasticsearch_path'] %>;
+    proxy_read_timeout 90;
+  }
+  location ~ ^/.*/_search$ {
+    proxy_pass <%= node['kibana']['nginx']['elasticsearch_path'] %>;
+    proxy_read_timeout 90;
+  }
+  location ~ ^/.*/_mapping {
+    proxy_pass <%= node['kibana']['nginx']['elasticsearch_path'] %>;
+    proxy_read_timeout 90;
+  }
+  location ~ ^/kibana-int/dashboard/.*$ {
+    proxy_pass <%= node['kibana']['nginx']['elasticsearch_path'] %>;
+    proxy_read_timeout 90;
+  }
+  location ~ ^/kibana-int/temp.*$ {
+    proxy_pass <%= node['kibana']['nginx']['elasticsearch_path'] %>;
+    proxy_read_timeout 90;
+  }
+}
